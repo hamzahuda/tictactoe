@@ -1,3 +1,5 @@
+"use strict";
+
 const gameBoard = (() => {
     const _board = new Array(9);
     let _marksAdded = 0;
@@ -11,7 +13,52 @@ const gameBoard = (() => {
         }
     };
 
+    const getBoard = () => _board;
+
+    const reset = () => {
+        _board = new Array(9);
+        _marksAdded = 0;
+    };
+
+    return { addMark, reset, getBoard };
+})();
+
+const playerFactory = (name, mark) => {
+    const name = name;
+    const _mark = mark;
+    const _score = 0;
+
+    const getMark = () => _mark;
+    const getScore = () => _score;
+    const incrementScore = () => _score++;
+    const resetScore = () => {
+        _score = 0;
+    };
+
+    return { getMark, incrementScore, getScore, resetScore, name };
+};
+
+const gameController = (() => {
+    const playerOne = playerFactory("Player One", "X");
+    const playerTwo = playerFactory("Player Two", "O");
+    let activePlayer = playerOne;
+
+    const getScores = () => {
+        return [playerOne.getScore(), playerTwo.getScore()];
+    };
+
+    const _switchActivePlayer = () => {
+        activePlayer = activePlayer === playerOne ? playerTwo : playerOne;
+    };
+
+    const playRound = (position) => {
+        gameBoard.addMark(activePlayer.getMark(), position);
+        _switchActivePlayer();
+    };
+
     const _checkForWinner = () => {
+        const board = gameBoard.getBoard();
+
         const winningPositions = [
             [0, 1, 2],
             [3, 4, 5],
@@ -25,8 +72,8 @@ const gameBoard = (() => {
 
         winningPositions.forEach((winningPos) => {
             if (
-                _board[winningPos[0]] === _board[winningPos[1]] &&
-                _board[winningPos[0]] === _board[winningPos[2]]
+                board[winningPos[0]] === board[winningPos[1]] &&
+                board[winningPos[0]] === board[winningPos[2]]
             ) {
                 return winningPos[0];
             }
@@ -51,16 +98,7 @@ const gameBoard = (() => {
         }
     };
 
-    const reset = () => {
-        _board = new Array(9);
-        _marksAdded = 0;
-    };
-
-    return { addMark, reset, checkForWinOrTie };
-})();
-
-const game = (() => {
-    return {};
+    return { playRound, getScores, checkForWinOrTie, playerOne, playerTwo };
 })();
 
 const displayController = (() => {
