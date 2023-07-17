@@ -2,13 +2,13 @@
 
 const gameBoard = (() => {
     const _board = new Array(9);
-    let _marksAdded = 0;
+    let marksAdded = 0;
 
     const addMark = (mark, position) => {
         if ((mark === "X" || mark === "O") && position >= 0 && position <= 8) {
             if (_board[position] === undefined) {
                 _board[position] = mark;
-                _marksAdded++;
+                marksAdded++;
             }
         }
     };
@@ -17,14 +17,14 @@ const gameBoard = (() => {
 
     const reset = () => {
         _board = new Array(9);
-        _marksAdded = 0;
+        marksAdded = 0;
     };
 
-    return { addMark, reset, getBoard };
+    return { addMark, reset, getBoard, marksAdded };
 })();
 
 const playerFactory = (name, mark) => {
-    const name = name;
+    this.name = name;
     const _mark = mark;
     const _score = 0;
 
@@ -39,16 +39,18 @@ const playerFactory = (name, mark) => {
 };
 
 const gameController = (() => {
-    const playerOne = playerFactory("Player One", "X");
-    const playerTwo = playerFactory("Player Two", "O");
-    let activePlayer = playerOne;
+    const players = [
+        playerFactory("Player One", "X"),
+        playerFactory("Player Two", "O"),
+    ];
+    let activePlayer = players[0];
 
     const getScores = () => {
-        return [playerOne.getScore(), playerTwo.getScore()];
+        return [players[0].getScore(), players[1].getScore()];
     };
 
     const _switchActivePlayer = () => {
-        activePlayer = activePlayer === playerOne ? playerTwo : playerOne;
+        activePlayer = activePlayer === players[0] ? players[1] : players[0];
     };
 
     const playRound = (position) => {
@@ -91,16 +93,54 @@ const gameController = (() => {
         const winner = _checkForWinner();
         if (winner) {
             return winner;
-        } else if (_marksAdded === 9) {
+        } else if (gameBoard.marksAdded === 9) {
             return "TIE";
         } else {
             return false;
         }
     };
 
-    return { playRound, getScores, checkForWinOrTie, playerOne, playerTwo };
+    return { playRound, getScores, checkForWinOrTie, players };
 })();
 
 const displayController = (() => {
-    return {};
+    const updateDisplay = () => {
+        let index = 0;
+        document.querySelectorAll(".cell").forEach((cell) => {
+            const mark = gameBoard.getBoard()[index];
+            if (mark === "X" || mark === "O") {
+                cell.textContent = mark;
+            }
+            index++;
+        });
+        document.getElementById("nameone").value =
+            gameController.players[0].name;
+        document.getElementById("nametwo").value =
+            gameController.players[1].name;
+    };
+
+    window.addEventListener("DOMContentLoaded", () => {
+        updateDisplay();
+
+        document.querySelectorAll(".cell").forEach((cell, index) => {
+            cell.addEventListener("click", () => {
+                gameController.playRound(index);
+                const gameEnd = gameController.checkForWinOrTie();
+                if (gameEnd) {
+                    if (gameEnd === "X") {
+                    }
+                }
+                updateDisplay();
+            });
+        });
+
+        document.getElementById("nameone").addEventListener("input", () => {
+            gameController.players[0] =
+                document.getElementById("nameone").value;
+        });
+        document.getElementById("nametwo").addEventListener("input", () => {
+            gameController.players[1] =
+                document.getElementById("nametwo").value;
+        });
+    });
 })();

@@ -1,0 +1,54 @@
+body {
+    display: grid;
+    grid-template: 12rem 1fr / 1fr;
+    height: 100vh;
+    font-family: "Roboto", sans-serif;
+    justify-items: center;
+}
+
+.namesection {
+    display: flex;
+    flex-direction: row;
+    font-size: 2rem;
+    justify-content: space-around;
+    align-items: center;
+    min-width: 500px;
+    width: 40vw;
+}
+
+#nameone,
+#nametwo {
+    font-size: 2rem;
+    border-style: none;
+    border-style: none;
+    background-color: rgb(234, 234, 234);
+    border-radius: 8px;
+    width: 200px;
+    height: 50px;
+    text-align: center;
+}
+
+.gameboard {
+    display: grid;
+    grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
+    min-width: 400px;
+    min-height: 400px;
+    height: 30vw;
+    width: 30vw;
+    gap: 10px;
+}
+
+.cell {
+    border-style: none;
+    border-color: black;
+    border-width: 2px;
+    background-color: rgb(234, 234, 234);
+    transition: all 0.1s ease-in-out;
+    font-size: 100px;
+    border-radius: 8px;
+}
+
+.cell:hover {
+    cursor: pointer;
+    background-color: rgb(199, 199, 199);
+}
