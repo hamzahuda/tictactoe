@@ -1,6 +1,6 @@
 body {
     display: grid;
-    grid-template: 12rem 1fr / 1fr;
+    grid-template: 12rem 400px 100px 1fr / 1fr;
     height: 100vh;
     font-family: "Roboto", sans-serif;
     justify-items: center;
@@ -12,18 +12,17 @@ body {
     font-size: 2rem;
     justify-content: space-around;
     align-items: center;
-    min-width: 500px;
+    min-width: 550px;
     width: 40vw;
 }
 
-#nameone,
-#nametwo {
+.name {
     font-size: 2rem;
     border-style: none;
     border-style: none;
     background-color: rgb(234, 234, 234);
     border-radius: 8px;
-    width: 200px;
+    width: 230px;
     height: 50px;
     text-align: center;
 }
@@ -33,15 +32,11 @@ body {
     grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
     min-width: 400px;
     min-height: 400px;
-    height: 30vw;
-    width: 30vw;
     gap: 10px;
 }
 
 .cell {
     border-style: none;
-    border-color: black;
-    border-width: 2px;
     background-color: rgb(234, 234, 234);
     transition: all 0.1s ease-in-out;
     font-size: 100px;
@@ -49,6 +44,31 @@ body {
 }
 
 .cell:hover {
+    cursor: pointer;
+    background-color: rgb(199, 199, 199);
+}
+
+#infobox {
+    border-style: none;
+    background-color: rgb(234, 234, 234);
+    transition: all 0.1s ease-in-out;
+    font-size: 2rem;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    margin-top: 3rem;
+}
+
+#newgame {
+    border-style: none;
+    background-color: rgb(234, 234, 234);
+    transition: all 0.1s ease-in-out;
+    font-size: 2rem;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    margin-top: 3rem;
+}
+
+#newgame:hover {
     cursor: pointer;
     background-color: rgb(199, 199, 199);
 }
